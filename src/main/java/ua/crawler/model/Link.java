@@ -14,7 +14,7 @@ public class Link {
     private Long id;
     private String URL;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "links")
     private List<Tag> tags;
 
     public Link() {
