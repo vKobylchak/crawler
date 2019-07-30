@@ -16,4 +16,10 @@ public class TagService {
         tagRepository.save(tag);
     }
 
+    @Transactional
+    public Tag findByName(String name){
+        return tagRepository.findByName(name);
+    }
+
+
 }

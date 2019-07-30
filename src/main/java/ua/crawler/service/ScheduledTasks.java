@@ -35,21 +35,27 @@ public class ScheduledTasks {
     public void reportCurrentTime() {
         crawler.getPageLinks(URL, depth);
         for (String url : crawler.getLinks()) {
-            Link link1 = new Link(url);
-            linkService.addLink(link1);
+            Link link = new Link(url);
+            linkService.addLink(link);
             try {
                 Document document = Jsoup.connect(url).get();
                 Elements tags = document.select(cssQuery);
                 for (Element tagElement : tags) {
-                    Tag tag = new Tag(tagElement.text());
-                    tag.getLinks().add(link1);
+                    Tag tag = createTag(tagElement.text());
+                    tag.getLinks().add(link);
                     tagService.addTag(tag);
-                    linkService.addLink(link1);
+                    linkService.addLink(link);
                 }
             } catch (IOException e) {
                 logger.warn("For '" + url + "': " + e.getMessage());
             }
         }
         logger.info("create database");
+    }
+
+    private Tag createTag(String tagName) {
+        Tag tag = tagService.findByName(tagName);
+        if (tag == null) return new Tag(tagName);
+        else return tag;
     }
 }
