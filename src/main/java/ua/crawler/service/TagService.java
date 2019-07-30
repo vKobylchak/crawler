@@ -8,8 +8,11 @@ import ua.crawler.repository.TagRepository;
 
 @Service
 public class TagService {
-    @Autowired
-    private TagRepository tagRepository;
+    private final TagRepository tagRepository;
+
+    public TagService(TagRepository tagRepository) {
+        this.tagRepository = tagRepository;
+    }
 
     @Transactional
     public void addTag(Tag tag) {
@@ -17,7 +20,7 @@ public class TagService {
     }
 
     @Transactional
-    public Tag findByName(String name){
+    public Tag findByName(String name) {
         return tagRepository.findByName(name);
     }
 

@@ -1,13 +1,11 @@
 package ua.crawler.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ua.crawler.model.Link;
 import ua.crawler.service.LinkService;
-import ua.crawler.service.TagService;
 
 import java.util.List;
 import java.util.Set;
@@ -15,10 +13,11 @@ import java.util.Set;
 @RestController
 @RequestMapping(path = "/link")
 public class LinkController {
-    @Autowired
-    private LinkService linkService;
-    @Autowired
-    private TagService tagService;
+    private final LinkService linkService;
+
+    public LinkController(LinkService linkService) {
+        this.linkService = linkService;
+    }
 
     @GetMapping(path = "/all")
     public Set<String> getAllURLs() {

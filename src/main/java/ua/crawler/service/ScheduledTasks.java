@@ -18,12 +18,23 @@ import java.io.IOException;
 @Service
 public class ScheduledTasks {
     private static final Logger logger = LoggerFactory.getLogger(ScheduledTasks.class);
-    @Autowired
-    private LinkService linkService;
-    @Autowired
-    private TagService tagService;
-    @Autowired
-    private WebCrawlerWithDepth crawler;
+    private final LinkService linkService;
+    private final TagService tagService;
+    private final WebCrawlerWithDepth crawler;
+//    @Autowired
+//    private LinkService linkService;
+//    @Autowired
+//    private TagService tagService;
+//    @Autowired
+//    private WebCrawlerWithDepth crawler;
+
+
+    public ScheduledTasks(LinkService linkService, TagService tagService, WebCrawlerWithDepth crawler) {
+        this.linkService = linkService;
+        this.tagService = tagService;
+        this.crawler = crawler;
+    }
+
     @Value("${crawler.URL}")
     private String URL;
     @Value("${crawler.depth}")

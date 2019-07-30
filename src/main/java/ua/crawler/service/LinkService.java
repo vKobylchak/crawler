@@ -13,10 +13,13 @@ import java.util.Set;
 
 @Service
 public class LinkService {
-    @Autowired
-    private LinkRepository linkRepository;
-    @Autowired
-    private TagRepository tagRepository;
+    private final LinkRepository linkRepository;
+    private final TagRepository tagRepository;
+
+    public LinkService(LinkRepository linkRepository, TagRepository tagRepository) {
+        this.linkRepository = linkRepository;
+        this.tagRepository = tagRepository;
+    }
 
     @Transactional
     public void addLink(Link link) {
