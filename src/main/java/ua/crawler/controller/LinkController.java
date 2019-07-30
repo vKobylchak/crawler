@@ -8,7 +8,6 @@ import ua.crawler.model.Link;
 import ua.crawler.service.LinkService;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping(path = "/link")
@@ -19,15 +18,13 @@ public class LinkController {
         this.linkService = linkService;
     }
 
-    @GetMapping(path = "/all")
-    public Set<String> getAllURLs() {
-        Iterable<Link> links = linkService.findAll();
-        return linkService.getURLs(links);
+    @GetMapping("/all")
+    public List<Link> getAllLinks() {
+        return linkService.findAll();
     }
 
     @GetMapping()
-    public Set<String> getLinksByTagId(@RequestParam Long id) {
-        List<Link> links = linkService.getLinksByTagId(id);
-        return linkService.getURLs(links);
+    public List<Link> getLinksByTagId(@RequestParam Long id) {
+        return linkService.getLinksByTagId(id);
     }
 }
