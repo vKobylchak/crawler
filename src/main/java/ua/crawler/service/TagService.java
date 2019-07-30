@@ -6,8 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.crawler.model.Tag;
 import ua.crawler.repository.TagRepository;
 
-import java.util.Optional;
-
 @Service
 public class TagService {
     @Autowired
