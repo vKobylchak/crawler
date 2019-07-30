@@ -14,7 +14,7 @@ public class Link {
     private Long id;
     private String URL;
 
-    @ManyToMany(mappedBy = "links")
+    @ManyToMany(mappedBy = "links", fetch = FetchType.EAGER)
     private List<Tag> tags;
 
     public Link() {
@@ -24,5 +24,6 @@ public class Link {
     public Link(String URL) {
         this.URL = URL;
         this.tags = new ArrayList<>();
+
     }
 }

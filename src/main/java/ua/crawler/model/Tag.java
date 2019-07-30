@@ -14,7 +14,7 @@ public class Tag {
     private Long id;
     private String name;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Link> links;
 
     public Tag() {
