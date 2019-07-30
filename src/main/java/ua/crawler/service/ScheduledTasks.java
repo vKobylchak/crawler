@@ -18,25 +18,21 @@ import java.io.IOException;
 @Service
 public class ScheduledTasks {
     private static final Logger logger = LoggerFactory.getLogger(ScheduledTasks.class);
-
     @Autowired
     private LinkService linkService;
-
     @Autowired
     private TagService tagService;
-
+    @Autowired
+    private WebCrawlerWithDepth crawler;
     @Value("${crawler.URL}")
     private String URL;
-
     @Value("${crawler.depth}")
     private int depth;
-
     @Value("${crawler.cssQuery}")
     private String cssQuery;
 
     @Scheduled(fixedRate = 86400000)
     public void reportCurrentTime() {
-        WebCrawlerWithDepth crawler = new WebCrawlerWithDepth();
         crawler.getPageLinks(URL, depth);
         for (String url : crawler.getLinks()) {
             Link link1 = new Link(url);
