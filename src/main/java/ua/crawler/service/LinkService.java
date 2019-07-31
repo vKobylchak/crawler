@@ -32,4 +32,9 @@ public class LinkService {
     public List<Link> getLinksByTagId(Long id) {
         return tagRepository.findById(id).get().getLinks();
     }
+
+    @Transactional
+    public Link findByURL(String url){
+        return linkRepository.findByUrl(url);
+    }
 }
