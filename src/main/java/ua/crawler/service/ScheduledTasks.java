@@ -36,13 +36,13 @@ public class ScheduledTasks {
         crawler.getPageLinks(URL, depth);
 
         crawler.getLinks()
-                .forEach(link -> {
-                    linkService.addLink(new Link(link));
+                .forEach(url -> {
+                    linkService.addLink(new Link(url));
                     try {
-                        Jsoup.connect(link).get().select(cssQuery)
-                                .forEach(element -> saveTag(element.text(), linkService.findByURL(link)));
+                        Jsoup.connect(url).get().select(cssQuery)
+                                .forEach(element -> saveTag(element.text(), linkService.findByURL(url)));
                     } catch (IOException e) {
-                        logger.warn("For '" + link + "': " + e.getMessage());
+                        logger.warn("For '" + url + "': " + e.getMessage());
                     }
                 });
         logger.info("create database");
