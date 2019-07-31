@@ -1,9 +1,6 @@
 package ua.crawler.service;
 
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,22 +34,17 @@ public class ScheduledTasks {
     @Scheduled(fixedRate = 86400000)
     public void reportCurrentTime() {
         crawler.getPageLinks(URL, depth);
-        for (String url : crawler.getLinks()) {
-            Link link = new Link(url);
-            linkService.addLink(link);
-            try {
-                Document document = Jsoup.connect(url).get();
-                Elements tags = document.select(cssQuery);
-                for (Element tagElement : tags) {
-                    Tag tag = createTag(tagElement.text());
-                    tag.getLinks().add(link);
-                    tagService.addTag(tag);
-                    linkService.addLink(link);
-                }
-            } catch (IOException e) {
-                logger.warn("For '" + url + "': " + e.getMessage());
-            }
-        }
+
+        crawler.getLinks()
+                .forEach(link -> {
+                    linkService.addLink(new Link(link));
+                    try {
+                        Jsoup.connect(link).get().select(cssQuery)
+                                .forEach(element -> saveTag(element.text(), linkService.findByURL(link)));
+                    } catch (IOException e) {
+                        logger.warn("For '" + link + "': " + e.getMessage());
+                    }
+                });
         logger.info("create database");
     }
 
@@ -60,5 +52,12 @@ public class ScheduledTasks {
         Tag tag = tagService.findByName(tagName);
         if (tag == null) return new Tag(tagName);
         else return tag;
+    }
+
+    private void saveTag(String tagElement, Link link) {
+        Tag tag = createTag(tagElement);
+        tag.getLinks().add(link);
+        tagService.addTag(tag);
+        linkService.addLink(link);
     }
 }
