@@ -6,7 +6,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -21,13 +20,6 @@ public class ScheduledTasks {
     private final LinkService linkService;
     private final TagService tagService;
     private final WebCrawlerWithDepth crawler;
-//    @Autowired
-//    private LinkService linkService;
-//    @Autowired
-//    private TagService tagService;
-//    @Autowired
-//    private WebCrawlerWithDepth crawler;
-
 
     public ScheduledTasks(LinkService linkService, TagService tagService, WebCrawlerWithDepth crawler) {
         this.linkService = linkService;
