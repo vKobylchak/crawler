@@ -12,7 +12,7 @@ public class Link {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Getter
-    private String URL;
+    private String url;
 
     @ManyToMany(mappedBy = "links", fetch = FetchType.EAGER)
     private List<Tag> tags;
@@ -21,8 +21,8 @@ public class Link {
         this.tags = new ArrayList<>();
     }
 
-    public Link(String URL) {
-        this.URL = URL;
+    public Link(String url) {
+        this.url = url;
         this.tags = new ArrayList<>();
     }
 }
