@@ -18,10 +18,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class TagServiceTest {
-
     @Autowired
     private TagService tagService;
-
     @MockBean
     private TagRepository tagRepository;
 
